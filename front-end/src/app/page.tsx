@@ -9,11 +9,29 @@ export default function Home() {
 
   const formHandler = async (e: any) => {
     e.preventDefault();
+    // try {
+    //   await axios.post("http://localhost:3001/api/submit", { name, email });
+    //   console.log("data submitted ");
+    // } catch (err) {
+    //   console.log("error occured", err);
+    // }
+
     try {
-      await axios.post("http://localhost:3001/api/submit", { name, email });
+      const response = await fetch("http://localhost:3001/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       console.log("data submitted ");
     } catch (err) {
-      console.log("error occured", err);
+      console.log("error occurred", err);
     }
   };
   return (
